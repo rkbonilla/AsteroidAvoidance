@@ -43,7 +43,7 @@ app.get("/getScore", function (req, res) {
         //.limit(1)
         .sort('-score')
         .then(function (highscore) {
-            console.log({ highscore });
+            //console.log({ highscore });
             res.json({ highscore });
         })
 })
