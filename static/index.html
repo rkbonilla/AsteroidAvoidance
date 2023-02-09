@@ -7,11 +7,14 @@
     <link rel="stylesheet" type="text/css" href="style.css" />
     <title>Asteroid Avoidance</title>
     <script>
+        var data = [];
         fetch("/getScore")
             .then(function (scores) {
                 scores.json()
                     .then(function (theScores) {
                         console.log(theScores);
+                        data = theScores.highscore;
+                        console.log(data);
                         var lastScore = document.createElement('p');
                         lastScore.innerHTML = theScores.highscore[0].score;
                         lastScore.id = 'lastScore'
@@ -21,17 +24,22 @@
                         var i = 1;
                         for (let highscore of theScores.highscore) {
                             var nameElement = document.createElement('span');
-                            nameElement.innerHTML = i + ".&nbsp&nbsp&nbsp&nbspUSERNAME:&nbsp" + highscore.name + "&nbsp&nbsp&nbsp&nbsp";
+                            nameElement.innerHTML = highscore.name;
+                            nameElement.id = "nameElement";
                             var scoreElement = document.createElement('span');
-                            scoreElement.innerHTML = "SCORE:&nbsp" + highscore.score;
+                            scoreElement.innerHTML = highscore.score;
+                            scoreElement.id = "scoreElement"
                             var scoreLine = document.createElement('p');
                             scoreLine.innerHTML = nameElement.innerHTML + scoreElement.innerHTML;
                             scoreLine.id = 'scoreLine';
                             document.getElementById("canvas-container").appendChild(scoreLine)
+                            document.getElementById("nameField").appendChild(nameElement)
+                            document.getElementById("scoreField").appendChild(scoreElement)
                             i++
                         }
                     })
             })
+            
     </script>
 </head>
 
@@ -41,8 +49,7 @@
         <form method="post" action="/saveScore" class="highscore">
             <input type="text" placeholder="Enter your name for High Score" name="name" id="nameField"
                 style="position:absolute; left:300px; top:400px; width:200px;" />
-            <input type="text" value="" name="score" id="scoreField" name="name" id="nameField"
-                style="display: none;" />
+            <input type="text" value="" name="score" id="scoreField" style="display: none;" />
             <button style="position:absolute; left: 350px; right: auto; top:450px; width:100px;">Submit</button>
         </form>
         <h1>HIGH SCORE LIST:</h1>

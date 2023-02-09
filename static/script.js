@@ -327,16 +327,37 @@ gameStates[2] = function () {
 
 }
 
-gameStates[3] = function()
-{
-    //Scoring Draw
+gameStates[3] = function () {
+    /*var i = 0;
+    let names = [];
+    let scores = [];
+
+    while (i < 5) {
+        names.push(document.getElementById("nameField").innerHTML);
+        scores.push(document.getElementById("scoreField").innerHTML);
+        i++
+    }*/
+    console.log(data)
     ctx.save();
-    ctx.font = "30px Arial";
+    ctx.font = "15px Arial";
     ctx.fillStyle = "white";
     ctx.textAlign = "center"
     var font = 40;
+    /*
+    i = 0;
+    while (i < 5) {
+        if (i < 4) {
+            ctx.font = `${font -= 5}px Arial`
+        }
+        ctx.fillText("#" + (i + 1) + " " + names[i] + " : " + scores[i], c.width / 2, 200 + (40 * i));
+        i++;
+    }*/
 
-    ctx.fillText("Press Enter to go Back", c.width/2, c.height/2 + 230);
+    var name = document.getElementById("scoreLine").innerHTML
+
+    ctx.fillText(name);
+
+    ctx.fillText("Press Enter to go Back", c.width / 2, c.height / 2 + 230);
     ctx.restore();
 }
 
