@@ -32,6 +32,7 @@ app.post("/saveScore", function (req, res) {
     console.log(req.body);
     //res.send(req.body);
 
+    if(new HiScore)
     new HiScore(req.body).save()
         .then(function () {
             res.redirect("index.html");
@@ -40,7 +41,7 @@ app.post("/saveScore", function (req, res) {
 
 app.get("/getScore", function (req, res) {
     HiScore.find({})
-        //.limit(1)
+        .limit(5)
         .sort('-score')
         .then(function (highscore) {
             //console.log({ highscore });

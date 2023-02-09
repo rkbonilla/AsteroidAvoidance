@@ -12,15 +12,22 @@
                 scores.json()
                     .then(function (theScores) {
                         console.log(theScores);
-
+                        var lastScore = document.createElement('p');
+                        lastScore.innerHTML = theScores.highscore[0].score;
+                        lastScore.id = 'lastScore'
+                        document.getElementById("scoreField").appendChild(lastScore);
+                        console.log(lastScore.innerHTML);
                         // append our container html
                         var i = 1;
                         for (let highscore of theScores.highscore) {
-                            var nameElement = document.createElement('p');
-                            nameElement.innerHTML = i + "&nbsp&nbsp&nbsp&nbspUSERNAME:&nbsp" + highscore.name + "&nbsp&nbsp&nbsp&nbsp";
+                            var nameElement = document.createElement('span');
+                            nameElement.innerHTML = i + ".&nbsp&nbsp&nbsp&nbspUSERNAME:&nbsp" + highscore.name + "&nbsp&nbsp&nbsp&nbsp";
                             var scoreElement = document.createElement('span');
                             scoreElement.innerHTML = "SCORE:&nbsp" + highscore.score;
-                            document.getElementById("canvas-container").appendChild(nameElement).appendChild(scoreElement);
+                            var scoreLine = document.createElement('p');
+                            scoreLine.innerHTML = nameElement.innerHTML + scoreElement.innerHTML;
+                            scoreLine.id = 'scoreLine';
+                            document.getElementById("canvas-container").appendChild(scoreLine)
                             i++
                         }
                     })

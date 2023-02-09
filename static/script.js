@@ -179,8 +179,7 @@ function keyPressDown(e) {
     }
     if (gameOver == true) {
         if (e.keyCode === 13) {
-
-            if (currentState == 2) {
+            if (currentState == 2 || currentState == 3) {
                 currentState = 0;
                 score = 0;
                 numAsteroids = 10;
@@ -195,12 +194,17 @@ function keyPressDown(e) {
                 main();
                 scoreTimer();
             }
-
+        }
+        if (e.keyCode === 16) {
+            if (currentState == 0) {
+                currentState = 3;
+                main();
+            }
         }
     }
 }
 
-//GameStates state machine. This is what sets up menu screens and main agme scene
+//GameStates state machine. This is what sets up menu screens and main game scene
 
 //---Main Menu---
 gameStates[0] = function () {
@@ -213,6 +217,7 @@ gameStates[0] = function () {
     ctx.fillText("Asteroid Avoidance", c.width / 2, c.height / 2 - 30);
     ctx.font = "15px Arial";
     ctx.fillText("Press Enter to Start", c.width / 2, c.height / 2 + 20);
+    ctx.fillText("Press Shift for High Scores", c.width / 2, c.height / 2 + 50);
     ctx.restore();
 }
 
@@ -286,13 +291,14 @@ gameStates[1] = function () {
 
 //---Game Over Screen---
 gameStates[2] = function () {
-    highScoreElements.style.display = "block";
-    var hiScoreInput = document.getElementById("scoreField")
-    hiScoreInput.value = score.toString();
-
+    if (highScore == 0) {
+        highScore = document.getElementById("lastScore").innerHTML;
+    }
     if (score > highScore) {
         // Move hi score stuff in here after done testing.
-
+        highScoreElements.style.display = "block";
+        var hiScoreInput = document.getElementById("scoreField")
+        hiScoreInput.value = score.toString();
         highScore = score;
         ctx.save();
         ctx.font = "30px Arial";
@@ -321,6 +327,18 @@ gameStates[2] = function () {
 
 }
 
+gameStates[3] = function()
+{
+    //Scoring Draw
+    ctx.save();
+    ctx.font = "30px Arial";
+    ctx.fillStyle = "white";
+    ctx.textAlign = "center"
+    var font = 40;
+
+    ctx.fillText("Press Enter to go Back", c.width/2, c.height/2 + 230);
+    ctx.restore();
+}
 
 //---Main Game Loop---
 function main() {
